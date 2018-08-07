@@ -5,7 +5,7 @@ set -e
 mkfs -t ext4 /dev/xvdb
 mount /dev/xvdb /home
 
-#update and install
+#update and install necessary packages
 yum -y update
 yum -y install jq git
 
@@ -16,7 +16,11 @@ pip install awscli --upgrade --user
 
 rm get-pip.py
 
-#get private key from aws secrets manager
+#This block of code fetches and interprets the private key stored in secrets manager.
+#The private key is used to ssh into the stsoftware github repository. 
+#To generate a new key use key-gen to make a new ssh key pair, then compress the private key
+#and encode it into base 64 before storing it in the aws secrets manager service under the alias <secret-id>. 
+
 secret_JS=$(aws secretsmanager get-secret-value --secret-id angus-ssh-key --region ap-southeast-2)
 key_pairs_JS=$(jq -r '.SecretString' <<< "${secret_JS}")
 private_key_64=$(jq -r '.private_key' <<< "${key_pairs_JS}")
@@ -24,6 +28,7 @@ private_key_64=$(jq -r '.private_key' <<< "${key_pairs_JS}")
 mkdir -p /home/ec2-user/.ssh
 echo "${private_key_64}" | base64 -i --decode | zcat > /home/ec2-user/.ssh/id_rsa
 
+#github finger print
 echo "github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCP\
 y6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81\
 eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUU\
