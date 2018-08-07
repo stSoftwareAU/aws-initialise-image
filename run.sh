@@ -5,7 +5,6 @@ sudo yum -y install jq
 curl -O https://bootstrap.pypa.io/get-pip.py
 python get-pip.py --user
 export PATH=~/.local/bin:$PATH
-source ~/. bash profile
 pip install awscli --upgrade --user
 #get private key from aws secrets manager
 secret_JS=$(aws secretsmanager get-secret-value --secret-id angus-ssh-key --region ap-southeast-2)
