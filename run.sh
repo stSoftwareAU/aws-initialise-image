@@ -8,7 +8,7 @@ export PATH=~/.local/bin:$PATH
 pip install awscli --upgrade --user
 #get private key from aws secrets manager
 secret_JS=$(aws secretsmanager get-secret-value --secret-id angus-ssh-key --region ap-southeast-2)
-key_pairs_JS=$( iq -r '.SecretString' <<< "${secret_JS}")
+key_pairs_JS=$(jq -r '.SecretString' <<< "${secret_JS}")
 private_key_64=$(jq -r '.private_key' <<< "${key_pairs_JS}")
 echo "${private_key_64}" | base64 -i --decode | zcat > .ssh/id_rsa
 chmod 600 .ssh/id_rsa
