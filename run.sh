@@ -23,7 +23,7 @@ rm get-pip.py
 #<secret-id>. The service stores key pairs as "<name>" : "<secret_value>", for <name> use 
 #private_key, and for <secret_value> the new private key. 
 
-secret_JS=$(aws secretsmanager get-secret-value --secret-id angus-ssh-key --region ap-southeast-2)
+secret_JS=$(aws secretsmanager get-secret-value --secret-id github --region ap-southeast-2)
 key_pairs_JS=$(jq -r '.SecretString' <<< "${secret_JS}")
 private_key_64=$(jq -r '.private_key' <<< "${key_pairs_JS}")
 
