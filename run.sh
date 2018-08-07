@@ -1,4 +1,6 @@
+#!/bin/bash
 set -e
+
 #update and install
 yum -y update
 yum -y install jq git
