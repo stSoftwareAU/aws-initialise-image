@@ -11,6 +11,7 @@ secret_JS=$(aws secretsmanager get-secret-value --secret-id angus-ssh-key --regi
 key_pairs_JS=$( iq -r '.SecretString' <<< "${secret_JS}")
 private_key_64=$(jq -r '.private_key' <<< "${key_pairs_JS}")
 echo "${private_key_64}" | base64 -i --decode | zcat > .ssh/id_rsa
+chmod 600 .ssh/id_rsa
 #clone st setup from git hub
 git clone git@github.com:stSoftwareAU/st-setup.git
 #st-setup/autodeploy $1
