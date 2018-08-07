@@ -19,7 +19,9 @@ rm get-pip.py
 #This block of code fetches and interprets the private key stored in secrets manager.
 #The private key is used to ssh into the stsoftware github repository. 
 #To generate a new key use key-gen to make a new ssh key pair, then compress the private key
-#and encode it into base 64 before storing it in the aws secrets manager service under the alias <secret-id>. 
+#and encode it into base 64 before storing it in the aws secrets manager service under the alias 
+#<secret-id>. The service stores key pairs as "<name>" : "<secret_value>", for <name> use 
+#private_key, and for <secret_value> the new private key. 
 
 secret_JS=$(aws secretsmanager get-secret-value --secret-id angus-ssh-key --region ap-southeast-2)
 key_pairs_JS=$(jq -r '.SecretString' <<< "${secret_JS}")
