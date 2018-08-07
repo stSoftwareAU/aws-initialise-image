@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+#format and mount encrypted drive
+mkfs -t ext4 /dev/xvdb
+mount /dev/xvdb /home
+
 #update and install
 yum -y update
 yum -y install jq git
