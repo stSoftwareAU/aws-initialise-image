@@ -2,6 +2,7 @@ set -e
 #update and install
 sudo yum -y update
 sudo yum -y install jq
+sudo yum -y install git qt
 curl -O https://bootstrap.pypa.io/get-pip.py
 python get-pip.py --user
 export PATH=~/.local/bin:$PATH
