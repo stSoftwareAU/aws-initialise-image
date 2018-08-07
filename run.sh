@@ -1,3 +1,4 @@
+set -e
 #update and install
 sudo yum -y update
 sudo yum -y install jq
