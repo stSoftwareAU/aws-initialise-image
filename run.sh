@@ -17,7 +17,7 @@ secret_JS=$(aws secretsmanager get-secret-value --secret-id angus-ssh-key --regi
 key_pairs_JS=$(jq -r '.SecretString' <<< "${secret_JS}")
 private_key_64=$(jq -r '.private_key' <<< "${key_pairs_JS}")
 
-mkdir -p /home/ec2_user/.ssh
+mkdir -p /home/ec2-user/.ssh
 echo "${private_key_64}" | base64 -i --decode | zcat > /home/ec2-user/.ssh/id_rsa
 
 echo "github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCP\
@@ -31,4 +31,4 @@ chown -R ec2-user:ec2-user /home/ec2-user/.ssh
 
 #clone st setup from git hub
 sudo -u ec2-user git clone git@github.com:stSoftwareAU/st-setup.git
-#sudo -u ec2-user st-setup/autodeploy $1
+sudo -u ec2-user st-setup/autodeploy $1
