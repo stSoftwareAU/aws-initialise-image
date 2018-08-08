@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-echo "<<<DEBUG>>>"
-
 #format and mount encrypted drive
 mv /home/ec2-user /root/
 mkfs -t ext4 /dev/xvdb
@@ -28,12 +26,8 @@ private_key_64=$(jq -r '.private_key' <<< "${key_pairs_JS}")
 mkdir -p /home/ec2-user/.ssh
 echo "${private_key_64}" | base64 -i --decode | zcat > /home/ec2-user/.ssh/id_rsa
 
-#github finger print
-echo "github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCP\
-y6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81\
-eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUU\
-mpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWl\
-g7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==" >> /home/ec2-user/.ssh/known_hosts
+#add github finger print
+jq -r '.fingerprint' <<< "${key_pairs_JS}" >> /home/ec2-user/.ssh/known_hosts
 
 chmod 600 /home/ec2-user/.ssh/id_rsa
 chown -R ec2-user:ec2-user /home/ec2-user/.ssh
