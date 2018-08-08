@@ -1,7 +1,7 @@
 # aws-initialise-image
 Public bootstrap script for AWS images. 
 
-## Generating and Store a New SSH Key Pair 
+## Generate and Store a New SSH Key Pair 
 1. To generate a ssh private key use ssh-keygen in the command line and follow the prompts, be sure **not** to set a passphrase for the new key. For more information refer to [this useful GitHub article](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/).
 
 ```bash
