@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+echo "<<<DEBUG>>>"
+
 #format and mount encrypted drive
 mv /home/ec2-user /root/
 mkfs -t ext4 /dev/xvdb
@@ -22,10 +24,6 @@ rm -f get-pip.py
 secret_JS=$(aws secretsmanager get-secret-value --secret-id github --region ap-southeast-2)
 key_pairs_JS=$(jq -r '.SecretString' <<< "${secret_JS}")
 private_key_64=$(jq -r '.private_key' <<< "${key_pairs_JS}")
-
-echo "<<<DEBUG>>>"
-ls -laR /home/ec2-user/
-#cat  /home/ec2-user/.ssh/id_rsa
 
 mkdir -p /home/ec2-user/.ssh
 echo "${private_key_64}" | base64 -i --decode | zcat > /home/ec2-user/.ssh/id_rsa
