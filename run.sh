@@ -16,13 +16,7 @@ pip install awscli --upgrade --user
 
 rm get-pip.py
 
-#This block of code fetches and interprets the private key stored in secrets manager.
-#The private key is used to ssh into the stsoftware github repository. 
-#To generate a new key use key-gen to make a new ssh key pair, then compress the private key
-#and encode it into base 64 before storing it in the aws secrets manager service under the alias 
-#<secret-id>. The service stores key pairs as "<name>" : "<secret_value>", for <name> use 
-#private_key, and for <secret_value> the new private key. 
-
+#get the private key from secrets manager
 secret_JS=$(aws secretsmanager get-secret-value --secret-id github --region ap-southeast-2)
 key_pairs_JS=$(jq -r '.SecretString' <<< "${secret_JS}")
 private_key_64=$(jq -r '.private_key' <<< "${key_pairs_JS}")
