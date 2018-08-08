@@ -2,8 +2,8 @@
 set -e
 
 #format and mount encrypted drive
-#mkfs -t ext4 /dev/xvdb
-#mount /dev/xvdb /home
+mkfs -t ext4 /dev/xvdb
+mount /dev/xvdb /home
 
 #update and install necessary packages
 yum -y update
@@ -14,14 +14,14 @@ python get-pip.py --user
 export PATH=~/.local/bin:$PATH
 pip install awscli --upgrade --user
 
-rm -f get-pip.py
+#rm -f get-pip.py
 
 #get the private key from secrets manager
 secret_JS=$(aws secretsmanager get-secret-value --secret-id github --region ap-southeast-2)
 key_pairs_JS=$(jq -r '.SecretString' <<< "${secret_JS}")
 private_key_64=$(jq -r '.private_key' <<< "${key_pairs_JS}")
 
-mkdir -p /home/ec2-user/.ssh
+#mkdir -p /home/ec2-user/.ssh
 echo "${private_key_64}" | base64 -i --decode | zcat > /home/ec2-user/.ssh/id_rsa
 
 #github finger print
