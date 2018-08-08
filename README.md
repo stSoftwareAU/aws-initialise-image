@@ -16,6 +16,25 @@ gzip -fc id_rsa | base64 -w 0 > id_rsa_gz_b64.txt
 
 4. Click next and enter a name and description for the secret. Click next to review what you've done, scroll down and click store secret. Done! 
 
+## Retrieve and Use SSH Key from Secrets Manager
+You may need permission to create roles to complete this stage, if you are signed in as admin or root then you have no restrictions placed on you, to specify permissions more granularly see [this aws link](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_permissions-required.html)
+
+1. We need an EC2 instance with permission to read secrets, to accomplish this we will create a role with the necesssary permissions. If such a role already exists, skip to step 5. Navigate to the IAM resource on the aws console click services>IAM and click roles. Check to see if there is a role that satisfies our needs arlready, if not click create role. 
+
+2. You will be asked to specify a aws service that will use the role, choose EC2, click next>create policy.
+
+3. For service select Secrets Manager, for actions chose **GetSecretValue**, for resource specify the **arn** of the secret you generated, click review policy.
+
+4. Provide a meaningful name and description of the role and click create policy. 
+
+5. Now we need to attach our role to an EC2 instance, create a launch configuration, follow the prompts and at step 3 specify an IAM role with the policy **GetSecretValue** attached. 
+
+6. An EC2 instance can access our secret now with the syntax
+
+```bash
+aws secretsmanager get-secret-value --secret-id <secret-id> --region <region>
+```
+
 ## Code Function and Documentation
 This code retrieves a ssh private key from the aws secrets manager service. The private key is used to ssh into the stsoftware private repository to download and install company code. 
 
