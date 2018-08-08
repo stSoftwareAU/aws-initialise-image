@@ -2,8 +2,8 @@
 set -e
 
 #format and mount encrypted drive
-mkfs -t ext4 /dev/xvdb
-mount /dev/xvdb /home
+#mkfs -t ext4 /dev/xvdb
+#mount /dev/xvdb /home
 
 #update and install necessary packages
 yum -y update
