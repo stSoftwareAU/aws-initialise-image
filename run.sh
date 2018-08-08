@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-exit
 
 #format and mount encrypted drive
 mkfs -t ext4 /dev/xvdb
@@ -33,7 +32,7 @@ mpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4y
 g7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==" >> /home/ec2-user/.ssh/known_hosts
 
 chmod 600 /home/ec2-user/.ssh/id_rsa
-chown -R ec2-user:ec2-user /home/ec2-user/.ssh
+#chown -R ec2-user:ec2-user /home/ec2-user/.ssh
 
 #clone st setup from git hub
 sudo -u ec2-user git clone git@github.com:stSoftwareAU/st-setup.git
