@@ -41,5 +41,5 @@ chmod 600 /home/ec2-user/.ssh/id_rsa
 chown -R ec2-user:ec2-user /home/ec2-user/.ssh
 
 #clone st setup from git hub
-sudo -u ec2-user git clone git@github.com:stSoftwareAU/st-setup.git /home/ec2-user
-sudo -u ec2-user /home/ec2-user/autodeploy $1
+sudo -u ec2-user git clone git@github.com:stSoftwareAU /home/ec2-user/aws-initialise-image
+#sudo -u ec2-user /home/ec2-user/aws-initialise-image/autodeploy $1
