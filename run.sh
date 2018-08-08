@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+exit
 
 #format and mount encrypted drive
 mkfs -t ext4 /dev/xvdb
