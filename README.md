@@ -19,7 +19,7 @@ gzip -fc id_rsa | base64 -w 0 > id_rsa_gz_b64.txt
 ## Retrieve and Use SSH Key from Secrets Manager
 You may need permission to create roles to complete this stage, if you are signed in as admin or root then you have no restrictions placed on you, to specify permissions more granularly see [this aws link](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_permissions-required.html)
 
-1. We need an EC2 instance with permission to read secrets, to accomplish this we will create a role with the necesssary permissions. If such a role already exists, skip to step 5. Navigate to the IAM resource on the aws console click services>IAM and click roles. Check to see if there is a role that satisfies our needs arlready, if not click create role. 
+1. We need an EC2 instance with permission to read secrets, to accomplish this we will create a role with the necesssary permissions. If such a role already exists, skip to step 5. Navigate to the IAM resource on the aws console click services>IAM>roles>create role. 
 
 2. You will be asked to specify a aws service that will use the role, choose EC2, click next>create policy.
 
