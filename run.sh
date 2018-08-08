@@ -2,8 +2,10 @@
 set -e
 
 #format and mount encrypted drive
-#mkfs -t ext4 /dev/xvdb
-#mount /dev/xvdb /home
+mv /home/ec2-user /root/
+mkfs -t ext4 /dev/xvdb
+mount /dev/xvdb /home
+mv /root/ec2-user /home/
 
 #update and install necessary packages
 yum -y update
@@ -23,8 +25,8 @@ private_key_64=$(jq -r '.private_key' <<< "${key_pairs_JS}")
 
 echo "<<<DEBUG>>>"
 ls -laR /home/ec2-user/
-cat  /home/ec2-user/.ssh/id_rsa
-exit
+#cat  /home/ec2-user/.ssh/id_rsa
+
 mkdir -p /home/ec2-user/.ssh
 echo "${private_key_64}" | base64 -i --decode | zcat > /home/ec2-user/.ssh/id_rsa
 
