@@ -40,4 +40,4 @@ chown -R ec2-user:ec2-user /home/ec2-user/.ssh
 
 #clone st setup from git hub
 sudo -u ec2-user git clone git@github.com:stSoftwareAU/st-setup.git
-sudo -u ec2-user st-setup/autodeploy $1
+#sudo -u ec2-user st-setup/autodeploy $1
