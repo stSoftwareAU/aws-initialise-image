@@ -36,7 +36,7 @@ aws secretsmanager get-secret-value --secret-id <secret-id> --region <region>
 ```
 ## Calling this Script to Setup EC2 instance
 
-7. Under user data advanced paste the following code
+Under user data>advanced paste the following code
 ```bash
 #!/bin/bash
 set -e
