@@ -41,7 +41,7 @@ Under user data>advanced paste the following code
 #!/bin/bash
 set -e
 
-wget -O https://raw.githubusercontent.com/stSoftwareAU/aws-setup/master/run.sh /root/run.sh
+wget -O https://raw.githubusercontent.com/stSoftwareAU/aws-initialise-image/master/run.sh /root/run.sh
 
 bash -x /root/run.sh st
 ```
