@@ -34,6 +34,17 @@ You may need permission to create roles to complete this stage, if you are signe
 ```bash
 aws secretsmanager get-secret-value --secret-id <secret-id> --region <region>
 ```
+## Calling this Script to Setup EC2 instance
+
+7. Under user data advanced paste the following code
+```bash
+#!/bin/bash
+set -e
+
+wget https://raw.githubusercontent.com/stSoftwareAU/aws-setup/master/run.sh
+
+bash run.sh st
+```
 
 ## Code Function and Documentation
 This code retrieves a ssh private key from the aws secrets manager service. The private key is used to ssh into the stsoftware private repository to download and install company code. 
