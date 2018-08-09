@@ -41,9 +41,9 @@ Under user data>advanced paste the following code
 #!/bin/bash
 set -e
 
-wget https://raw.githubusercontent.com/stSoftwareAU/aws-setup/master/run.sh
+wget -O https://raw.githubusercontent.com/stSoftwareAU/aws-setup/master/run.sh /root/run.sh
 
-bash run.sh st
+bash -x /root/run.sh st
 ```
 
 ## Code Function and Documentation
