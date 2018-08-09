@@ -43,7 +43,7 @@ set -e
 
 wget -O /root/run.sh https://raw.githubusercontent.com/stSoftwareAU/aws-initialise-image/master/run.sh
 
-bash -x /root/run.sh st
+bash /root/run.sh st
 ```
 
 ## Code Function and Documentation
