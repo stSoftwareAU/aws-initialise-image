@@ -18,16 +18,36 @@ pip install awscli --upgrade --user
 
 rm -f get-pip.py
 
-#get the private key from secrets manager
-secret_JS=$(aws secretsmanager get-secret-value --secret-id github --region ap-southeast-2)
+#get secrets from secrets manager
+secret_JS=$(aws secretsmanager get-secret-value --secret-id "${1}-boot_secrets" --region ap-southeast-2)
 key_pairs_JS=$(jq -r '.SecretString' <<< "${secret_JS}")
-private_key_64=$(jq -r '.private_key' <<< "${key_pairs_JS}")
 
+#make and configure aws_cli config and credentials files
+mkdir -p /home/ec2-user/.aws
+
+echo "[default]
+output = json
+region = ap-southeast-2" > /home/ec2-user/.aws/config
+
+aws_access_key_id=$(jq -r '.aws_access_key_id' <<< "${key_pairs_JS}")
+aws_secret_access_key=$(jq -r '.aws_secret_access_key' <<< "${key_pairs_JS}")
+
+echo "[default]
+aws_access_key_id = ${aws_access_key_id}
+aws_secret_access_key = ${aws_secret_access_key}" > /home/ec2-user/.aws/credentials
+
+chmod 700 /home/ec2-user/.aws
+chmod 600 /home/ec2-user/.aws/*
+chown -R ec2-user:ec2-user /home/ec2-user/.aws
+
+
+#add github private ssh key and fingerprint
 mkdir -p /home/ec2-user/.ssh
+
+private_key_64=$(jq -r '.github_private_key' <<< "${key_pairs_JS}")
 echo "${private_key_64}" | base64 -i --decode | zcat > /home/ec2-user/.ssh/id_rsa
 
-#add github finger print
-jq -r '.fingerprint' <<< "${key_pairs_JS}" >> /home/ec2-user/.ssh/known_hosts
+jq -r '.github_fingerprint' <<< "${key_pairs_JS}" >> /home/ec2-user/.ssh/known_hosts
 
 chmod 600 /home/ec2-user/.ssh/id_rsa
 chown -R ec2-user:ec2-user /home/ec2-user/.ssh
