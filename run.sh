@@ -40,7 +40,6 @@ chmod 700 /home/ec2-user/.aws
 chmod 600 /home/ec2-user/.aws/*
 chown -R ec2-user:ec2-user /home/ec2-user/.aws
 
-
 #add github private ssh key and fingerprint
 mkdir -p /home/ec2-user/.ssh
 
