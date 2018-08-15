@@ -25,6 +25,7 @@ gzip -fc id_rsa | base64 -w 0 > id_rsa_gz_b64.txt
 
 2. You will be given a couple of options for what kind of secret to store, click 'other type of secrets'. Then fill in the text boxes as shown in the image below: the name of a secret value should be entered in the left and the value in the right, click add row to add another secret value. (we need 4 rows) 
   ![add secret values to the secret](https://raw.githubusercontent.com/stSoftwareAU/aws-initialise-image/master/images/new_secret_2.png)
+
 pay careful attention to the names you provide in the left column they should match mine exactly. 
   ![secret value names](https://raw.githubusercontent.com/stSoftwareAU/aws-initialise-image/master/images/new_secret_3.png)
 
