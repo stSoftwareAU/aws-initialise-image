@@ -1,7 +1,12 @@
 # aws-initialise-image
 Public bootstrap script for AWS images. 
 
-## Generate and Store a New SSH Key Pair 
+## What this script needs to work properly
+1. This script must be passed a client parameter like "st" or in general "<client_name>". 
+2. This script should be called by an ec2-instance on start up with sufficient permissions to access a secret called "st-boot_secrets" or in general "<client_name>-boot_secrets".
+3. The secret should conatin four things: A private ssh key called github_private_key; github's ssh fingerprint, called github_fingerprint; an aws access key id called aws_access_key_id; and an aws secret access key called aws_secret_access_key. 
+
+## Generating a New SSH Key Pair 
 1. To generate a ssh private key use ssh-keygen in the command line and follow the prompts, be sure **not** to set a passphrase for the new key. For more information refer to [this useful GitHub article](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/).
 
 ```bash
@@ -12,9 +17,28 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ```bash
 gzip -fc id_rsa | base64 -w 0 > id_rsa_gz_b64.txt
 ```
-3. Now we need to store the key in the aws secrets manager service! Log into aws with an account that has permission to create new secrets, the relevant IAM policy is **SecretsManagerReadWrite**. Click Services>Secrets Manager>Store a new secret. You will be given a couple of options for what kind of secret to store, click 'other type of secrets'. There will be two text boxes to fill on this page: the left one is the name used to refer to the secret value within the secret, use private_key, paste the ssh private key into the right box. 
+3. Done! Now we need to store the key in the aws secrets manager service! Read on for details... 
 
-4. Click next and enter a name and description for the secret. Click next to review what you've done, scroll down and click store secret. Done! 
+## Creating a Secret with Secrets Manager
+1. Log into aws with an account that has permission to create new secrets, the relevant IAM policy is **SecretsManagerReadWrite**. Click Services>Secrets Manager>Store a new secret. 
+  ![store a new secret](https://raw.githubusercontent.com/stSoftwareAU/aws-initialise-image/master/images/new_secret_1.png)
+
+2. You will be given a couple of options for what kind of secret to store, click 'other type of secrets'. Then fill in the text boxes as shown in the image below: the name of a secret value should be entered in the left and the value in the right, click add row to add another secret value. (we need 4 rows) 
+  ![add secret values to the secret](https://raw.githubusercontent.com/stSoftwareAU/aws-initialise-image/master/images/new_secret_2.png)
+pay careful attention to the names you provide in the left column they should match mine exactly. 
+  ![secret value names](https://raw.githubusercontent.com/stSoftwareAU/aws-initialise-image/master/images/new_secret_3.png)
+
+3. Name the secret "st-boot_secrets" or in general "<client_name>-boot_secrets>" and provide a useful description.
+  ![name and description](https://raw.githubusercontent.com/stSoftwareAU/aws-initialise-image/master/images/new_secret_4.png)
+
+4. On the next screen we don't have to do anything because we're not interested in rotation, click next.
+  ![rotation](https://raw.githubusercontent.com/stSoftwareAU/aws-initialise-image/master/images/new_secret_5.png)
+
+5. Review what you've done and **scroll down to confirm**.  
+  ![review](https://raw.githubusercontent.com/stSoftwareAU/aws-initialise-image/master/images/new_secret_6.png)
+
+6. To edit your secret click on it and click on retrieve secret value then edit, you can also copy your secret's arn from here to create a policy that can access it. 
+  ![edit and get arn](https://raw.githubusercontent.com/stSoftwareAU/aws-initialise-image/master/images/new_secret_7.png)
 
 ## Retrieve and Use SSH Key from Secrets Manager
 You may need permission to create roles to complete this stage, if you are signed in as admin or root then you have no restrictions placed on you, to specify permissions more granularly see [this aws link](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_permissions-required.html)
