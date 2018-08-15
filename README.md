@@ -31,6 +31,9 @@ You may need permission to create roles to complete this stage, if you are signe
 
 6. An EC2 instance can access our secret now with the syntax
 
+![image_test](https://raw.githubusercontent.com/stSoftwareAU/aws-initialise-image/master/images/security_manager.png)
+
+
 ```bash
 aws secretsmanager get-secret-value --secret-id <secret-id> --region <region>
 ```
