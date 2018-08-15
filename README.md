@@ -15,7 +15,7 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 2. Once you have a private ssh key we need to compress it so that it will fit into the secret manager's not so generous character cap and encode it in base 64 to ensure integrity of the key's formatting ect. 
 
 ```bash
-gzip -fc id_rsa | base64 -w 0 > id_rsa_gz_b64.txt
+gzip -fc ~/.ssh/id_rsa | base64 -w 0 | xclip -selection c
 ```
 3. Done! Now we need to store the key in the aws secrets manager service! Read on for details... 
 
@@ -55,9 +55,6 @@ You may need permission to create roles to complete this stage, if you are signe
 5. Now we need to attach our role to an EC2 instance, create a launch configuration, follow the prompts and at step 3 specify an IAM role with the policy **GetSecretValue** attached. 
 
 6. An EC2 instance can access our secret now with the syntax
-
-![image_test](https://raw.githubusercontent.com/stSoftwareAU/aws-initialise-image/master/images/security_manager.png)
-
 
 ```bash
 aws secretsmanager get-secret-value --secret-id <secret-id> --region <region>
