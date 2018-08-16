@@ -46,10 +46,12 @@ mkdir -p /home/ec2-user/.ssh
 private_key_64=$(jq -r '.github_private_key' <<< "${key_pairs_JS}")
 echo "${private_key_64}" | base64 -i --decode | zcat > /home/ec2-user/.ssh/id_rsa
 
-jq -r '.github_fingerprint' <<< "${key_pairs_JS}" >> /home/ec2-user/.ssh/known_hosts
-
 chmod 600 /home/ec2-user/.ssh/id_rsa
 chown -R ec2-user:ec2-user /home/ec2-user/.ssh
+
+# Don't do this yet (doesn't seem to work)
+#jq -r '.github_fingerprint' <<< "${key_pairs_JS}" >> /home/ec2-user/.ssh/known_hosts
+sudo -u ec2-user ssh -o StrictHostKeyChecking=no -T git@github.com
 
 #clone st setup from git hub
 sudo -u ec2-user git clone git@github.com:stSoftwareAU/st-setup.git /home/ec2-user/st-setup
