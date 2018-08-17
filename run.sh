@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-exit
+
 #format and mount encrypted drive
 mv /home/ec2-user /root/
 mkfs -t ext4 /dev/sdb
@@ -40,19 +40,27 @@ chmod 600 /home/ec2-user/.aws/*
 chown -R ec2-user:ec2-user /home/ec2-user/.aws
 
 #add github private ssh key and fingerprint
-mkdir -p /home/ec2-user/.ssh
+#mkdir -p /home/ec2-user/.ssh
 
 private_key_64=$(jq -r '.github_private_key' <<< "${key_pairs_JS}")
 echo "${private_key_64}" | base64 -i --decode | zcat > /home/ec2-user/.ssh/id_rsa
 
-chmod 600 /home/ec2-user/.ssh/id_rsa
+echo "
+github.com,192.30.255.113,192.30.255.112 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+P\
+XYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4E\
+VVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0e\
+OzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
+" >> /home/ec2-user/.ssh/known_hosts
+
+
+chmod 600 /home/ec2-user/.ssh/*
 chown -R ec2-user:ec2-user /home/ec2-user/.ssh
 
 # Don't do this yet (doesn't seem to work)
 #jq -r '.github_fingerprint' <<< "${key_pairs_JS}" >> /home/ec2-user/.ssh/known_hosts
-set +e
-sudo -u ec2-user ssh -o StrictHostKeyChecking=no -T git@github.com
-set -e 
+#set +e
+#sudo -u ec2-user ssh -o StrictHostKeyChecking=no -T git@github.com
+#set -e 
 
 #clone st setup from git hub
 sudo -u ec2-user git clone git@github.com:stSoftwareAU/st-setup.git /home/ec2-user/st-setup
