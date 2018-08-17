@@ -4,7 +4,7 @@ Public bootstrap script for AWS images.
 ## What this script needs to work properly
 1. This script must be passed a client parameter like "st" or in general "<client_name>". 
 2. This script should be called by an ec2-instance on start up with sufficient permissions to access a secret called "st-boot_secrets" or in general "<client_name>-boot_secrets".
-3. The secret should conatin four things: A private ssh key called github_private_key; ~~ github's ssh fingerprint, called github_fingerprint;~~ an aws access key id called aws_access_key_id; and an aws secret access key called aws_secret_access_key. 
+3. The secret should conatin four things: A private ssh key called github_private_key; ~~github's ssh fingerprint, called github_fingerprint;~~ an aws access key id called aws_access_key_id; and an aws secret access key called aws_secret_access_key. 
 
 ## Generating a New SSH Key Pair 
 1. To generate a ssh private key use ssh-keygen in the command line and follow the prompts, be sure **not** to set a passphrase for the new key. For more information refer to [this useful GitHub article](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/).
