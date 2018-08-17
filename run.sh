@@ -3,8 +3,8 @@ set -e
 
 #format and mount encrypted drive
 mv /home/ec2-user /root/
-mkfs -t ext4 /dev/xvdb
-mount /dev/xvdb /home
+mkfs -t ext4 /dev/sdb
+mount /dev/sdb /home
 mv /root/ec2-user /home/
 
 #update and install necessary packages
