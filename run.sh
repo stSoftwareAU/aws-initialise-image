@@ -8,7 +8,6 @@ mount /dev/xvdb /home
 mv /root/ec2-user /home/
 
 #update and install necessary packages
-yum -y update
 yum -y install jq git
 
 curl -O https://bootstrap.pypa.io/get-pip.py
