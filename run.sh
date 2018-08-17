@@ -51,7 +51,9 @@ chown -R ec2-user:ec2-user /home/ec2-user/.ssh
 
 # Don't do this yet (doesn't seem to work)
 #jq -r '.github_fingerprint' <<< "${key_pairs_JS}" >> /home/ec2-user/.ssh/known_hosts
+set +e
 sudo -u ec2-user ssh -o StrictHostKeyChecking=no -T git@github.com
+set -e 
 
 #clone st setup from git hub
 sudo -u ec2-user git clone git@github.com:stSoftwareAU/st-setup.git /home/ec2-user/st-setup
