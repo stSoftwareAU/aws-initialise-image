@@ -6,7 +6,7 @@ mv /home/ec2-user /root/
 mkfs -t ext4 /dev/sdb
 mount /dev/sdb /home
 mv /root/ec2-user /home/
-
+exit
 #update and install necessary packages
 yum -y install jq git
 
