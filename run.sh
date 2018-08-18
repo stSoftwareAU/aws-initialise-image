@@ -6,7 +6,10 @@ mv /home/ec2-user /root/
 mkfs -t ext4 /dev/sdb
 mount /dev/sdb /home
 mv /root/ec2-user /home/
-exit
+
+uuid=`file -Ls /dev/sdb | sed -n "s/^.*\(UUID=\S*\).*$/\1/p"`
+echo "${uuid}       /data   ext4    defaults,nofail        0       2" >> /etc/fstab
+
 #update and install necessary packages
 yum -y install jq git
 
@@ -52,15 +55,8 @@ VVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUm
 OzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
 " >> /home/ec2-user/.ssh/known_hosts
 
-
 chmod 600 /home/ec2-user/.ssh/*
 chown -R ec2-user:ec2-user /home/ec2-user/.ssh
-
-# Don't do this yet (doesn't seem to work)
-#jq -r '.github_fingerprint' <<< "${key_pairs_JS}" >> /home/ec2-user/.ssh/known_hosts
-#set +e
-#sudo -u ec2-user ssh -o StrictHostKeyChecking=no -T git@github.com
-#set -e 
 
 #clone st setup from git hub
 sudo -u ec2-user git clone git@github.com:stSoftwareAU/st-setup.git /home/ec2-user/st-setup
