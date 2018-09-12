@@ -58,7 +58,6 @@ chown -R ec2-user:ec2-user /home/ec2-user/.ssh
 
 #clone st setup from git hub
 sudo -u ec2-user git clone git@github.com:stSoftwareAU/st-setup.git /home/ec2-user/st-setup
-sudo -u ec2-user /home/ec2-user/st-setup/auto-deploy.sh $1 UAT
 
 #make root launch script
 cat > /root/launch.sh << EOF
@@ -70,3 +69,6 @@ if ! sudo -u ec2-user /home/ec2-user/st-setup/launch.sh "\$@"; then
     /sbin/shutdown -h now
 fi
 EOF
+chmod 700 /root/launch.sh
+#create image
+sudo -u ec2-user /home/ec2-user/st-setup/auto-deploy.sh $1 UAT
