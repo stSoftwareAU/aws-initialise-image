@@ -65,7 +65,7 @@ cat > ~/launch.sh << EOF
 #!/bin/bash
 set -e
 
-if ! sudo -u ec2-user /home/ec2-user/st-setup/launch.sh \"\$@\"; then 
+if ! sudo -u ec2-user /home/ec2-user/st-setup/launch.sh "\$@"; then 
     >&2 echo "could not launch \$@"
     /sbin/shutdown -h now
 fi
