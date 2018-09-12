@@ -69,6 +69,8 @@ if ! sudo -u ec2-user /home/ec2-user/st-setup/launch.sh "\$@"; then
     /sbin/shutdown -h now
 fi
 EOF
+
 chmod 700 /root/launch.sh
+
 #create image
 sudo -u ec2-user /home/ec2-user/st-setup/auto-deploy.sh $1 UAT
