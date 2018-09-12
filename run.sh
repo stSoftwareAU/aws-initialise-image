@@ -61,7 +61,7 @@ sudo -u ec2-user git clone git@github.com:stSoftwareAU/st-setup.git /home/ec2-us
 sudo -u ec2-user /home/ec2-user/st-setup/auto-deploy.sh $1 UAT
 
 #make root launch script
-cat > /root/launch.sh << EOF
+cat > ~/launch.sh << EOF
 #!/bin/bash
 set -e
 
