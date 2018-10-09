@@ -56,8 +56,14 @@ OzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJi
 chmod 600 /home/ec2-user/.ssh/*
 chown -R ec2-user:ec2-user /home/ec2-user/.ssh
 
+AREA=${2:-"UAT"}
+REPO="st-setup"
+if [ "${AREA}" != "UAT" ]; then
+    REPO="${AREA}-setup"
+fi
+
 #clone st setup from git hub
-sudo -u ec2-user git clone git@github.com:stSoftwareAU/st-setup.git /home/ec2-user/st-setup
+sudo -u ec2-user git clone git@github.com:stSoftwareAU/${REPO}.git /home/ec2-user/st-setup
 
 #make root launch script
 cat > /root/launch.sh << EOF
@@ -73,4 +79,4 @@ EOF
 chmod 700 /root/launch.sh
 
 #create image
-sudo -u ec2-user /home/ec2-user/st-setup/auto-deploy.sh $1 UAT
+sudo -u ec2-user /home/ec2-user/st-setup/auto-deploy.sh $1 ${AREA}
