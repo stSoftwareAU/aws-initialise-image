@@ -70,6 +70,18 @@ cat > /root/launch.sh << EOF
 #!/bin/bash
 set -e
 
+counter=0
+while [ ! -f "/home/ec2-user/st-setup/launch.sh" ]
+do
+  counter=$(( $counter + 1))
+  if [ $counter -gt 20 ]; then
+    echo "can't find /home/ec2-user/st-setup/launch.sh"
+    /sbin/shutdown -h now
+  fi
+  echo "file does not exist, wait 1 sec"
+  sleep 1
+done
+
 if ! sudo -u ec2-user /home/ec2-user/st-setup/launch.sh "\$@"; then 
     >&2 echo "could not launch \$@"
     /sbin/shutdown -h now
