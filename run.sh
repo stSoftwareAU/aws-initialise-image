@@ -11,12 +11,12 @@ uuid=`file -Ls /dev/sdb | sed -n "s/^.*\(UUID=\S*\).*$/\1/p"`
 echo "${uuid}     /home   ext4    defaults,nofail        0       2" >> /etc/fstab
 
 #update and install necessary packages
-yum -y install jq git
+yum -y install jq git python37
 
 curl -O https://bootstrap.pypa.io/get-pip.py
-python get-pip.py --user
+python3 get-pip.py --user
 export PATH=~/.local/bin:$PATH
-pip install awscli --upgrade --user
+pip3 install --upgrade --user awscli
 
 rm -f get-pip.py
 
