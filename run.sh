@@ -46,7 +46,7 @@ chown -R ec2-user:ec2-user /home/ec2-user/.aws
 private_key_64=$(jq -r '.github_private_key' <<< "${key_pairs_JS}")
 echo "${private_key_64}" | base64 -i --decode | zcat > /home/ec2-user/.ssh/id_rsa
 
-curl -L https://api.github.com/meta | jq -r '.ssh_keys | .[]' | sed -e 's/^/github.com /' >> ~/.ssh/known_hosts
+curl -L https://api.github.com/meta | jq -r '.ssh_keys | .[]' | sed -e 's/^/github.com /' >> /home/ec2-user/.ssh/known_hosts
 
 chmod 600 /home/ec2-user/.ssh/*
 chown -R ec2-user:ec2-user /home/ec2-user/.ssh
