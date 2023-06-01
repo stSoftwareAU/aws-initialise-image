@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 #format and mount encrypted drive
 mv /home/ec2-user /root/
