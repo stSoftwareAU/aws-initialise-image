@@ -13,7 +13,7 @@ echo "${uuid}     /home   ext4    defaults,nofail        0       2" >> /etc/fsta
 #update and install necessary packages
 yum -y install jq git python37
 
-curl -O https://bootstrap.pypa.io/get-pip.py
+curl -O https://bootstrap.pypa.io/pip/3.7/get-pip.py
 python3 get-pip.py --user
 export PATH=~/.local/bin:$PATH
 pip3 install --upgrade --user awscli
